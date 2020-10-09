@@ -14,10 +14,3 @@ class Task {
         this.createdOn = new Date(); // current date and time
     }
 }
-
-/**
- *
- * create an object
- * console log the object
- * 
- */

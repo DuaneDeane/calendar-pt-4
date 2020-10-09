@@ -1,4 +1,4 @@
-
+const elPendingTasks = document.querySelector('#pendingTasks')
 var visible = false;
 var important = false;
 var showIcon = '<i class="fas fa-eye"></i>'
@@ -10,16 +10,19 @@ function showDetails() {
     console.log("btn clicked!");
 
     if(!visible) {
+        elPendingTasks.classList.add("split");
         UI.backRight.removeClass("hide");
         UI.backRight.addClass("split right");
         UI.btnShow.html(hideIcon + "Hide details");
         visible = true;
     }
     else {
+        elPendingTasks.classList.remove("split");
         UI.backRight.addClass("hide");
         UI.backRight.removeClass("split right");
         UI.btnShow.html(showIcon + "Show details");
         visible = false;
+       
     }
 }
 
@@ -34,14 +37,15 @@ function toggleImportant() {
         UI.btnImportant.addClass("far");
         important = false;
     }
+    console.log(important);
 }
 
 function saveTask() {
-    var title = UI.txtTitle.val()
-    var date = UI.txtDate.val()
-    var description = UI.txtDescription.val()
-    var alert = UI.txtAlert.val()
-    var location = UI.txtLocation.val()
+    var title = UI.txtTitle.val();
+    var date = UI.txtDate.val();
+    var description = UI.txtDescription.val();
+    var alert = UI.txtAlert.val();
+    var location = UI.txtLocation.val();
 
     if(!date) {
         $("#alertError").removeClass('hide');
@@ -120,18 +124,27 @@ function loadTask() {
 }
 
 function displayTask(task) {
-    var syntax = 
-    `<div class='task'>
-        <i class="far fa-circle check"></i>
+    let myClasses='far fa-star';
+    if(task.important===true){
+        myClasses='fas fa-star active';
+    }
 
-        <label class='task-title'>${task.title}</lablel>
-        <label class='task-description'>${task.description}</label>
+    const myDateTime = task.dueDate.toLocaleDateString().replace(/\//g, '-');
+    const myHTML = 
+    `<div class="task">
 
-        <label class='task-title'>${task.dueDate.toLocaleDateString() + ' ' + task.dueDate.toLocaleTimeString()}</label>
+        <header>
+            <h2 class="task-title"><i class="far fa-circle check"></i> ${task.title}</h2>
+            <i id="btnImportant" class="${myClasses}"></i>
+        </header>
+
+        <time dateTime="${myDateTime}" class="task-title">${task.dueDate.toLocaleDateString() + ' ' + task.dueDate.toLocaleTimeString()}</time>
+
+        <p class="task-description">${task.description}</p>
 
     </div>`;
 
-    $("#pendingTasks").append(syntax);
+    $("#pendingTasks").append(myHTML);
 }
 
 function init() {
@@ -150,6 +163,7 @@ function init() {
         txtDescription: $("#txtDescription"),
         txtAlert: $("#txtAlert"),
         txtLocation: $("#txtLocation")
+        
     };
 
     // get data from servers
@@ -157,6 +171,7 @@ function init() {
     UI.btnShow.click(showDetails);
     UI.btnImportant.click(toggleImportant);
     UI.btnSave.click(saveTask);
+    
 }
 
 

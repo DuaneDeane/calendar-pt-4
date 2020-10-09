@@ -1,9 +1,11 @@
-/* Flexbox */
+* {
+    overflow: hidden y;
+}
 
 body {
     background-color: grey;
-
 }
+
 .hide {
     display: none;
 }
@@ -46,10 +48,33 @@ body {
     background-color: tan;
 }
 
-.task{
+.task {
     background-color: #feffff;
     box-shadow: -1px 1px 2px #000000;
     padding: 10px 15px;
     margin: 10px 10px 0 15px;
     border-radius: 3px;
+}
+
+.task h2 {
+    font-size: 1.5em;
+}
+
+.task header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#pendingTasks.split {
+    width: 60%;
+    z-index: 0;
+}
+
+#pendingTasks {
+    margin-top: 1em;
+}
+
+#secList {
+    z-index: 1;
+    margin-bottom: 1.5em;
 }
